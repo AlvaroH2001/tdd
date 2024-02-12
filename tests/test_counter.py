@@ -18,8 +18,10 @@ from src.counter import app
 # we need to import the file that contains the status codes
 from src import status
 
+
 class CounterTest(TestCase):
     """Counter tests"""
+
     def test_create_a_counter(self):
         """It should create a counter"""
         client = app.test_client()
@@ -28,13 +30,15 @@ class CounterTest(TestCase):
 
     def setUp(self):
         self.client = app.test_client()
-#Just adding in this comment to be able to commit again
+
+    # Just adding in this comment to be able to commit again
     def test_duplicate_a_counter(self):
         """It should return an error for duplicates"""
         result = self.client.post('/counters/bar')
         self.assertEqual(result.status_code, status.HTTP_201_CREATED)
         result = self.client.post('/counters/bar')
         self.assertEqual(result.status_code, status.HTTP_409_CONFLICT)
+
     def test_update_a_counter(self):
         """Test updating a counter increments its value"""
         # Step 1: Create a counter
@@ -43,8 +47,6 @@ class CounterTest(TestCase):
         # Step 2: Update the counter and ensure successful return code
         update_response = self.client.put('/counters/test_update_counter')
         self.assertEqual(update_response.status_code, status.HTTP_200_OK)
-
-
 
     def test_read_a_counter(self):
         """Test reading a counter returns the correct value"""
