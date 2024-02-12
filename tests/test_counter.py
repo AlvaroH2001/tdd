@@ -28,7 +28,7 @@ class CounterTest(TestCase):
 
     def setUp(self):
         self.client = app.test_client()
-
+#Just adding in this comment to be able to commit again
     def test_duplicate_a_counter(self):
         """It should return an error for duplicates"""
         result = self.client.post('/counters/bar')
