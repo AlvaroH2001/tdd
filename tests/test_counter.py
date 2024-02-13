@@ -40,10 +40,9 @@ class CounterTest(TestCase):
         self.assertEqual(result.status_code, status.HTTP_409_CONFLICT)
 
     def test_update_a_counter(self):
-        """Test updating a counter increments its value"""
+        """It should increment the counter"""
         # Step 1: Create a counter
         self.client.post('/counters/test_update_counter')
-
         # Step 2: Update the counter and ensure successful return code
         update_response = self.client.put('/counters/test_update_counter')
         self.assertEqual(update_response.status_code, status.HTTP_200_OK)
@@ -57,3 +56,16 @@ class CounterTest(TestCase):
         read_response = self.client.get('/counters/test_read_counter')
         self.assertEqual(read_response.status_code, 200)
         self.assertEqual(read_response.json, {'test_read_counter': 0})
+
+    def test_delete_counter(self):
+        """It should delete a counter"""
+        # Step 1: Create a counter
+        self.client.post('/counters/test_delete_counter')
+
+        # Step 2: Delete the counter and ensure successful return code
+        delete_response = self.client.delete('/counters/test_delete_counter')
+        self.assertEqual(delete_response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # Step 3: Attempt to read the counter after deletion and ensure it returns a 404
+        read_response = self.client.get('/counters/test_delete_counter')
+        self.assertEqual(read_response.status_code, status.HTTP_404_NOT_FOUND)
